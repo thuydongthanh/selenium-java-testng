@@ -4,6 +4,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.support.locators.RelativeLocator;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
@@ -96,6 +97,16 @@ public class Topic_02_Selenium_Locator {
 
     @Test
     public  void TC_08_XPath() {
+
+        // 1 - Duy nhất
+        // 2 - Ưu tiên nếu có id/class/name
+        // 3 - Không có id/class/name: dùng bất kì attribute khác
+        // 4 - Giá trị của attribute phải có ý nghĩa liên quan đến element đó và ko bị thay đổi: title
+
+        // => Tối ưu nhất để dùng
+
+        //5 - Link không nên dùng attribute href vì dễ bị thay đổi
+
         driver.findElement(By.xpath("//input[@id='Company']"));
         driver.findElement(By.xpath("//input[@id='Password']"));
 
@@ -112,6 +123,35 @@ public class Topic_02_Selenium_Locator {
         driver.findElement(By.xpath("//a"));
         driver.findElement(By.xpath("//button"));
         driver.findElement(By.xpath("//input"));
+    }
+
+    @Test
+    public void TC_09_Relative_Locator() {
+        //1 - Dùng khi ko thể định danh element của chính nó (dựa vào vị trí bên cạnh / gần đó)
+        //2- Sử dụng để test GUI (giao diện khớp với design)
+        driver.get("https://demo.nopcommerce.com/login");
+        //Element A
+        By passwordInputBy = By.cssSelector("#Password");
+        WebElement passwordInput = driver.findElement(By.cssSelector("#Password"));
+
+        //Element B
+        By rememberMeCheckboxBy = By.id("RememberMe");
+
+        //Element C
+        By forgotPasswordTextboxBy = By.className("forgot-password");
+
+        //Element D
+        By buttonLoginBy = By.cssSelector("button.login-button");
+
+        //Element E
+
+        WebElement rememberMeTextbox = driver.findElement(RelativeLocator.with(By.tagName("label"))
+                .above(buttonLoginBy) // Label nằm phía trên button Login
+                .below(passwordInputBy) // label nằm dưới input password
+                .toLeftOf(forgotPasswordTextboxBy) //label nằm trái textbox forgotpassword
+                .toRightOf(rememberMeCheckboxBy) // label nằm bên phải checkbox
+                .near(rememberMeCheckboxBy).near(buttonLoginBy)
+        );
     }
 
     @AfterClass
