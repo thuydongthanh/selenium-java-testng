@@ -93,6 +93,59 @@ public class Topic_03_Xpath {
         // Phủ định lại element có style rõ ràng hơn, chỉ dùng khi có 2 element
             driver.findElement(By.xpath("//div[not(@style='display: none')]/div[@class='raDiv']"));
     }
+
+    @Test
+    public void TC_Xpath_Outside_Parent () {
+        //Khi các element ko cùng nằm trên thẻ cha
+        //https://live.techpanda.org/index.php/mobile.html
+            driver.findElement(By.xpath("(//button[@title='Add to Cart'])[1]"));
+            driver.findElement(By.xpath("(//button[@title='Add to Cart'])[2]"));
+            driver.findElement(By.xpath("(//button[@title='Add to Cart'])[3]"));
+    }
+
+    @Test
+    public void TC_Xpath_Position_Last() {
+        //Postion
+            driver.findElement(By.xpath("//ol[@id='selectable']/li[1]"));
+            driver.findElement(By.xpath("//ol[@id='selectable']/li[position()='10']"));
+        //Last: lấy elemenet cuối cùng
+            driver.findElement(By.xpath("//ol[@id='selectable']/li[last()]"));
+
+        //** lấy element kế cuối => dùng count() lấy ra tổng node hoặc dùng last()
+            driver.findElement(By.xpath("//ol[@id='selectable']/li[last()-1]"));
+            driver.findElement(By.xpath("//ol[@id='selectable']/li[count(//ol[@id='selectable']/li)-1]"));
+    }
+
+    @Test
+    public void TC_Xpath_Axes() {
+        //https://live.techpanda.org/index.php/mobile.html
+        //Cần tìm từ khóa duy nhất để lấy
+
+        //Đang đứng ở node hiện tại nếu:
+            // Muốn đi lên node cha => parent::tagname
+                driver.findElement(By.xpath("//a[text()='IPhone']/parent::h2/following-sibling::div[@class='actions']/button"));
+            // Muốn đi lên node tổ tiên (cha/ông/cụ/kị) => ancestor::tagname
+                driver.findElement(By.xpath("//a[text()='IPhone']/ancestor::div[@class='category-products']"));
+            // Muốn đi lên node anh => preceding-sibling::tagname
+                driver.findElement(By.xpath("//a[@title='IPhone']/following-sibling::div/div[@class='actions']/preceding-sibling::h2"));
+            // Muốn đi xuống node em => following-sibling::tagname
+                driver.findElement(By.xpath("//a[text()='IPhone']/parent::h2/following-sibling::div[@class='actions']"));
+            // Muốn đi xuống node con => child:tagname
+                driver.findElement(By.xpath("//a[@title='IPhone']/following-sibling::div/child::*"));
+                //Thay child:: = /: đi từ trên xuống vào node con
+                driver.findElement(By.xpath("//a[@title='IPhone']/following-sibling::div/*"));
+            // Muốn đi xuống node cháu/chắt/chút => descendant::tagname
+                driver.findElement(By.xpath("//a[@title='IPhone']/following-sibling::div/descendant::*"));
+                //Thay descendant:: = //: đi từ trên xuống vào bất kì node con/cháu/bên dưới
+                driver.findElement(By.xpath("//a[@title='IPhone']/following-sibling::div//*"));
+
+            // Dùng /.. để lấy ra element cha
+            driver.findElement(By.xpath("//a[text()='IPhone']/../../.."));
+            driver.findElement(By.xpath("//a[text()='IPhone']/parent::h2/parent::div/parent::li"));
+            driver.findElement(By.xpath("//a[text()='IPhone']/parent::*/parent::*/parent::*"));
+    }
+
+
     @AfterClass
     public void cleanBrowser() {
         driver.quit();
