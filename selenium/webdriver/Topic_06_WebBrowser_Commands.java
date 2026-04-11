@@ -1,20 +1,20 @@
 package webdriver;
 
-import com.beust.ah.A;
-import org.openqa.selenium.By;
-import org.openqa.selenium.Dimension;
-import org.openqa.selenium.Point;
-import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
+import org.openqa.selenium.logging.LogEntries;
+import org.openqa.selenium.logging.LogEntry;
+import org.openqa.selenium.logging.Logs;
 import org.openqa.selenium.safari.SafariDriver;
 import org.testng.Assert;
-import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
+import java.net.URL;
 import java.time.Duration;
+import java.util.Set;
 
 public class Topic_06_WebBrowser_Commands {
 
@@ -54,7 +54,7 @@ public class Topic_06_WebBrowser_Commands {
             //Kiểm tra tương đối
             Assert.assertTrue(homePageSourceCode.contains("Condition of Use"));
 
-        //Lấy ra ID của tab/window hiện tại
+        //Lấy ra tất cả ID của tab/window các tab/window đang có
             driver.getWindowHandles();
         //Lấy ra ID của tab/window đang active
             driver.getWindowHandle();
@@ -64,28 +64,78 @@ public class Topic_06_WebBrowser_Commands {
         //Đi tìm n element
             driver.findElements(By.xpath(""));
 
+         //Khai báo biến chung
+        WebDriver.Timeouts timeouts = driver.manage().timeouts();
+        WebDriver.Window windows = driver.manage().window();
+
         //Dùng để chờ cho việc tìm elements
-            driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(15));
-            driver.manage().timeouts().implicitlyWait(Duration.ofMinutes(15));
+            timeouts.implicitlyWait(Duration.ofSeconds(15));
+            timeouts.implicitlyWait(Duration.ofMinutes(15));
         //Dùng để chờ cho việc page được load xong
-            driver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(15));
+            timeouts.pageLoadTimeout(Duration.ofSeconds(15));
         //Dùng để chờ cho 1 đoạn script được thực thi xong - code js
-            driver.manage().timeouts().scriptTimeout(Duration.ofSeconds(15));
+            timeouts.scriptTimeout(Duration.ofSeconds(15));
 
         //Thu nhỏ về Taskbar để chạy
-            driver.manage().window().minimize();
+            windows.minimize();
         //Phóng to lên (vẫn có Taskbar)
-            driver.manage().window().maximize();
+            windows.maximize();
         // Tràn màn hình (ko có taskbar)
-            driver.manage().window().fullscreen();
+            windows.fullscreen();
 
         // Set kích thước cho cửa sổ browser mở lên trên màn hình => ứng dụng để test responsive
-            driver.manage().window().setSize(new Dimension(1920, 1000));
-            driver.manage().window().getSize();
+            windows.setSize(new Dimension(1920, 1000));
+            windows.getSize();
         // Set vị trí cho cửa sổ browser mở lên trên màn hình
-            driver.manage().window().setPosition(new Point(0,0));
-            driver.manage().window().getPosition();
+            windows.setPosition(new Point(0,0));
+            windows.getPosition();
 
-        //Test GUI - Graphpic User Interface: font, collor, postion,...
+        //Lấy hết tất cả cookie
+            Set<Cookie> cookies = driver.manage().getCookies();
+
+        //Lấy một giá trị của cookie
+            driver.manage().getCookieNamed("Truyền vào tên cookie");
+
+        //Xóa hết tất cả cookie
+            driver.manage().deleteAllCookies();
+
+        //Xóa cookie theo thứ tự dùng vòng lặp để xóa
+            for (Cookie cookie: cookies) {
+                driver.manage().deleteCookie(cookie);
+            }
+        //Xóa cookie theo tên
+            driver.manage().deleteCookieNamed("Truyền vào tên cookie");
+
+        //Đến 1 Test Class khác 02/03/04 => Không cần login - set cookie đã có vào đây rồi refresh lại
+            for (Cookie cookie: cookies) {
+                //add cookie theo thứ tự
+                driver.manage().addCookie(cookie);
+            }
+            driver.navigate().refresh(); //Refresh lại là login thành công
+        
+            Logs logs = driver.manage().logs();
+            LogEntries logEntries = logs.get("BROWSER");
+            for (LogEntry LogEn: logEntries) {
+                System.out.println(LogEn);
+            }
+
+            logs.getAvailableLogTypes();
+
+        //Navigate
+            WebDriver.Navigation navigation = driver.navigate();
+            navigation.refresh(); //Refresh browswer
+            navigation.back(); //back lại trang trước đó
+            navigation.forward(); // chuyển tiếp tới trang trước đó
+            navigation.to("Truyền url"); // Mở url bất kì
+
+        //Switch to: Alert, Iframe, Windows
+            WebDriver.TargetLocator targetLocator = driver.switchTo();
+            targetLocator.alert().accept();
+            targetLocator.alert().dismiss();
+
+            targetLocator.frame("");
+            targetLocator.defaultContent();
+
+            targetLocator.window("");
     }
 }
