@@ -206,8 +206,6 @@ public class Topic_09_WebElement_Excercise_I {
         Assert.assertTrue( driver.findElement(By.cssSelector("li.special-char.not-completed")).isDisplayed());
         Assert.assertTrue( driver.findElement(By.xpath("//li[@class='8-char completed']")).isDisplayed());
         Assert.assertTrue( driver.findElement(By.cssSelector("li.username-check.not-completed")).isDisplayed());
-
-
     }
     @AfterClass
     public void cleanBrowser() {
