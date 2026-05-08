@@ -5,6 +5,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
@@ -18,6 +19,7 @@ public class Topic_12_Custom_Dropdown {
 
     WebDriver driver;
     WebDriverWait explicitWait;
+    Select select;
 
     @BeforeClass
     public void initialBrowser() {
@@ -66,6 +68,31 @@ public class Topic_12_Custom_Dropdown {
         Assert.assertEquals(driver.findElement(By.cssSelector("div.divider")).getText(), "Algeria");
     }
 
+    @Test
+    public void TC_05_Huawei_Dropdown() throws InterruptedException {
+        driver.get("https://id5.cloud.huawei.com/CAS/portal/userRegister/regbyemail.html");
+        explicitWait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("div[ht='input_emailregister_dropdown']"))).click();
+        Thread.sleep(2000);
+        driver.findElement(By.cssSelector("input[ht='input_emailregister_search']")).sendKeys("Vietnam");
+        List<WebElement> allItems = explicitWait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.cssSelector("span.list-item-text")));
+        for (WebElement item : allItems) {
+            if (item.getText().equals("Vietnam")) {
+                item.click();
+                break;
+            }
+        }
+    }
+
+    @Test
+    public void TC_06_FinPeace_Dropdown() throws InterruptedException {
+        //sửa lại hàm ở dòng 101 thành xpath
+        driver.get("https://sps.finpeace.vn/tools/sktccn");
+        selectItemInDropdown("input#job_id", "//div[@id='job_id_list']/following-sibling::div//div[@class='ant-select-item-option-content']", "Bất động sản");
+        Assert.assertEquals(driver.findElement(By.xpath("//input[@id='job_id']/parent::span/following-sibling::span")).getText(), "Bất động sản");
+        selectItemInDropdown("input#married_status", "//div[@id='married_status_list']/following-sibling::div//div[@class='ant-select-item-option-content']", "Độc thân, chưa có con");
+        Assert.assertEquals(driver.findElement(By.xpath("//input[@id='married_status']/parent::span/following-sibling::span")).getText(), "Độc thân, chưa có con");
+    }
+
     private void selectItemInDropdown(String parentCss, String childCss, String textItem) throws InterruptedException {
         //Hành vi để thao tác lên dropdown
         //1- Chờ cho dropdown có thể thao tác lên được (clickable)
@@ -112,5 +139,4 @@ public class Topic_12_Custom_Dropdown {
     public void cleanBrowser() {
         driver.quit();
     }
-
 }

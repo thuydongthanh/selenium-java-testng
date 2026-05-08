@@ -71,8 +71,6 @@ public class Topic_07_WebElement_Commands {
 
         element.getShadowRoot();
 
-
-
     }
 
 
