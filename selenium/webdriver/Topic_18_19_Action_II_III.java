@@ -1,23 +1,20 @@
 package webdriver;
 
-import org.checkerframework.checker.units.qual.K;
 import org.openqa.selenium.*;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.interactions.Actions;
-import org.openqa.selenium.json.JsonException;
 import org.openqa.selenium.support.Color;
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
-import java.awt.*;
 import java.io.*;
 import java.nio.charset.Charset;
 import java.time.Duration;
 import java.util.List;
 
-public class Topic_18_Action_II {
+public class Topic_18_19_Action_II_III {
 
     WebDriver driver;
     Actions actions;
