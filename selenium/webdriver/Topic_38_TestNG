@@ -1,0 +1,15 @@
+1. SoftWare Testing Level: 4 level tùy vào dự án có thể ít hoặc nhiều hơn
+- Unit Testing (Whitebox): test đơn vị code
+- Integration Testing: kiểm thử tích hợp (API/struct/coponent) (blackbox or whitebox)
+- System Testing + Acceptance Testing (Blackbox)
+
+=> khuyến nghị nên test unit test nhiều nhất sau đó test ít dần, test case phần unit test sẽ dễ dàng hơn
+
+2. Automation Testing Level:
+- Unit Test
+- API Test
+- UI Test
+
+=> Phát hiện bug ở giai đoạn càng sớm => Số tiền fix càng nhỏ
+
+
