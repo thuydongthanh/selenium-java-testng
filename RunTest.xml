@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
 
-<suite name="Suite1" verbose="1">
+<suite name="OrangeHRm" verbose="1">
+
+<!--DEMO Topic 04 TestNG-->
     <test name="Run on Chrome">
         <groups>
             <run>
@@ -13,9 +15,9 @@
         </groups>
         <!--chạy theo package-->
         <packages>
-            <package name="payment"></package>
-            <package name="product"></package>
-            <package name="testng"></package>
+            <package name="payment"/>
+            <package name="product"/>
+            <package name="testng"/>
         </packages>
 
         <!--Chaỵ theo class -->

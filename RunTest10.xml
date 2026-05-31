@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+
+<!--        //Thread count ko set mặc định là 5-->
+<suite name="OrangeHRm" verbose="1" parallel="tests" thread-count="3">
+
+    <!--DEMO Topic 10 TestNG-->
+    <parameter name="server" value="Production"/>
+    <test name="Run On Chrome">
+        <parameter name="browser" value="Chrome"/>
+        <classes>
+            <class name="testng.Topic_10_Multiple_Browser"/>
+        </classes>
+    </test>
+
+    <test name="Run On Edge">
+        <parameter name="browser" value="Edge"/>
+        <classes>
+            <class name="testng.Topic_10_Multiple_Browser"/>
+        </classes>
+    </test>
+
+    <test name="Run On Firefox">
+        <parameter name="browser" value="Firefox"/>
+        <classes>
+            <class name="testng.Topic_10_Multiple_Browser"/>
+        </classes>
+    </test>
+</suite>

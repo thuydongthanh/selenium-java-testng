@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+
+
+<suite name="All Class">
+<!--Áp dụng listener cho tất cả các class    -->
+    <listeners>
+        <listener class-name="listener.ScreenshotListener"/>
+    </listeners>
+
+    <test name="Run on Chrome">
+        <packages>
+            <package name="testng"/>
+            <package name="payment"/>
+            <package name="product"/>
+        </packages>
+    </test>
+
+    <test name="Run on Firefox">
+        <packages>
+            <package name="testng"/>
+            <package name="payment"/>
+            <package name="product"/>
+        </packages>
+    </test>
+
+
+    <!--Preserve-order = true: chạy theo tứ tự vị trí class trong file XML -->
+    <!--Preserve-order = true: chạy theo thứ tự vị trí class trong file package -->
+    <test name="Run On Firefox" preserve-order="false">
+        <classes>
+            <class name="testng.Topic_10_Multiple_Browser"/>
+            <class name="testng.Topic_04_Group"/>
+            <class name="testng.Topic_11_Loop"/>
+        </classes>
+    </test>
+
+</suite>
